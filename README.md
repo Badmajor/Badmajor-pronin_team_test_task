@@ -1,4 +1,4 @@
-# CodePet_test_task
+# ProninTeam_test_task
 
 Тестовое задание Backend Python (ProninTeam)
 ## Задача
