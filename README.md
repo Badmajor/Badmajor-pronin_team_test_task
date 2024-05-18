@@ -38,7 +38,26 @@ Collect (модель непосредственно Группового ден
 моковыми данными (несколько тысяч).
 Можно использовать любые дополнительные библиотеки.
 
-Стек: python, docker, nginx, redis, django, docker-compose, django-rest-framework, postgresql, celery, rabbitmq
+Стек: python, docker, nginx, redis, django, docker-compose, django-rest-framework, 
+postgresql, celery, rabbitmq, Faker, django-cacheops, drf_yasg, djoser
+
+### Используемые технологии:
+Данные хранятся в реляционной базе PostgreSQL в отдельном контейнере. 
+
+API реализован стандартными инструментами DRF
+
+Регистрация и аутентификация реализована с помощью djoser
+
+Кеширование данных реализовано библиотекой [Django Cacheops](https://github.com/Suor/django-cacheops). Кешируются 
+аутентификации пользователей и все модели из приложения payments. Кеш хранится в Redis, так же поднят в отдельном 
+контейнере.
+
+Для отправки писем пользователям при создании платежа или сбора использовал Celery и RabbitMQ для асинхронной отправки.
+Celery запущен в совместно с django, у RabbirMQ свой контейнер.
+
+Management command 'add_mock_data' реализована стандартными инструментами Django.
+
+Документация генерируется автоматически при помощи библиотеки [drf-yasg](https://github.com/axnsan12/drf-yasg)
 
 ## Как запустить проект:
 Клонировать репозиторий и перейти в каталог:
@@ -57,15 +76,7 @@ cp .env.example .env
 ```bash
 sudo docker compose up --build -d
 ```
-Выполнить миграции:
-```bash
-sudo docker compose exec backend python manage.py migrate
-```
-Собрать статику и скопировать статику:
-```bash
-sudo docker compose exec backend python manage.py collectstatic
-sudo docker compose exec backend cp -r /codepet/static/. /static/
-```
+
 Наполнить базу данных:
 ```bash
 sudo docker compose exec backend python manage.py add_mock_data
