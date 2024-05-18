@@ -10,7 +10,10 @@ MAX_LENGTH = 156
 
 
 class Payment(models.Model):
-    donator = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Донатор")
+    donator = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name="Донатор")
     amount = models.PositiveIntegerField(
         "сумма",
     )

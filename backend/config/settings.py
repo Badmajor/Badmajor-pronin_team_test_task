@@ -10,7 +10,7 @@ load_dotenv(os.path.join(BASE_DIR, ".env"))
 
 SECRET_KEY = os.getenv("SECRET_KEY_DJANGO", "django-secret-key")
 
-DEBUG = os.getenv("DEBUG", 'False') == 'True'
+DEBUG = os.getenv("DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,").split(",")
 
@@ -28,7 +28,7 @@ INSTALLED_APPS = [
     "djoser",
     "debug_toolbar",
     "drf_yasg",
-    'cacheops',
+    "cacheops",
     "users.apps.UsersConfig",
     "payments.apps.PaymentsConfig",
     "api.apps.ApiConfig",
@@ -132,11 +132,11 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.TokenAuthentication",
     ],
-    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+git     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 10,
 }
 
-INTERNAL_IPS = type(str('c'), (), {'__contains__': lambda *a: True})()
+INTERNAL_IPS = type(str("c"), (), {"__contains__": lambda *a: True})()
 
 CELERY_TIMEZONE = TIME_ZONE
 CELERY_TASK_TRACK_STARTED = True
@@ -149,18 +149,16 @@ CELERY_RESULT_SERIALIZER = "json"
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 CACHEOPS_REDIS = {
-    'host': os.getenv('REDIS_HOST', '172.17.0.1'),
-    'port': os.getenv('REDIS_PORT', 6379),
-    'db': os.getenv('REDIS_DB_NAME', 1),
-    'socket_timeout': 3,
+    "host": os.getenv("REDIS_HOST", "172.17.0.1"),
+    "port": os.getenv("REDIS_PORT", 6379),
+    "db": os.getenv("REDIS_DB_NAME", 1),
+    "socket_timeout": 3,
 }
 
-CACHEOPS_DEFAULTS = {
-    'timeout': 60 * 60
-}
+CACHEOPS_DEFAULTS = {"timeout": 60 * 60}
 
 CACHEOPS = {
-    'auth.user': {'ops': 'get'},
-    'auth.*': {'ops': ('fetch', 'get')},
-    'payments.*': {'ops': 'all'},
+    "auth.user": {"ops": "get"},
+    "auth.*": {"ops": ("fetch", "get")},
+    "payments.*": {"ops": "all"},
 }

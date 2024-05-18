@@ -14,7 +14,10 @@ class CollectViewSet(viewsets.ModelViewSet):
         Collect.objects.order_by("created_at")
         .select_related("author", "reason")
         .prefetch_related(
-            Prefetch("payments", queryset=Payment.objects.select_related("donator"))
+            Prefetch(
+                "payments",
+                queryset=Payment.objects.select_related("donator")
+            )
         )
         .annotate(current_amount=Sum("payments__amount"))
     )
