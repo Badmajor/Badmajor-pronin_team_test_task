@@ -1,7 +1,5 @@
 #!/bin/sh
 
-python manage.py migrate
-
 python manage.py collectstatic
 
 cp -r /backend/static/. /static/
