@@ -76,7 +76,10 @@ cp .env.example .env
 ```bash
 sudo docker compose up --build -d
 ```
-
+Выполнить миграции:
+```bash
+sudo docker compose exec backend python manage.py migrate
+```
 Наполнить базу данных:
 ```bash
 sudo docker compose exec backend python manage.py add_mock_data
