@@ -18,7 +18,6 @@ def get_email(obj) -> str:
 @shared_task
 def task_send_email(obj):
     template = TEMPLATES.get(obj.__class__.__name__)
-    print(template)
     email = get_email(obj)
     html_message = render_to_string(template, {"obj": obj})
     message = strip_tags(html_message)

@@ -46,9 +46,7 @@ class Command(BaseCommand):
     def _create_reasons(self):
         self.reasons = Reason.objects.bulk_create(
             [
-                Reason(title=self.faker.text(
-                    max_nb_chars=MAX_LENGTH_CHAR_SHORT
-                ))
+                Reason(title=self.faker.text(max_nb_chars=MAX_LENGTH_CHAR_SHORT))
                 for _ in range(AMOUNT_REASONS)
             ]
         )
@@ -59,9 +57,7 @@ class Command(BaseCommand):
                 Collect(
                     author=self.faker.random_element(self.users),
                     title=self.faker.text(max_nb_chars=MAX_LENGTH_CHAR_SHORT),
-                    description=self.faker.text(
-                        max_nb_chars=MAX_LENGTH_CHAR_LONG
-                    ),
+                    description=self.faker.text(max_nb_chars=MAX_LENGTH_CHAR_LONG),
                     target=self.faker.random_int(
                         min=MIN_AMOUNT, max=MAX_AMOUNT, step=MIN_AMOUNT
                     ),

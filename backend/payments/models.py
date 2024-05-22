@@ -10,10 +10,7 @@ MAX_LENGTH = 156
 
 
 class Payment(models.Model):
-    donator = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        verbose_name="Донатор")
+    donator = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Донатор")
     amount = models.PositiveIntegerField(
         "сумма",
     )
@@ -74,14 +71,6 @@ class Collect(models.Model):
         verbose_name = "групповой сбор"
         verbose_name_plural = "Групповые сборы"
         default_related_name = "collect"
-
-    @property
-    def amount_donators(self):
-        return self.all_payments.count()
-
-    @property
-    def all_payments(self):
-        return self.payments
 
 
 @receiver(post_save, sender=Payment)

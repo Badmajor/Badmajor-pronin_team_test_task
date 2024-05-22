@@ -32,9 +32,9 @@ class PaymentSerializer(serializers.ModelSerializer):
 
 class CollectSerializer(serializers.ModelSerializer):
     current_amount = serializers.SerializerMethodField(read_only=True)
-    amount_donators = serializers.SerializerMethodField()
-    is_completed = serializers.SerializerMethodField()
-    all_payments = PaymentSerializer(many=True, read_only=True)
+    amount_donators = serializers.SerializerMethodField(read_only=True)
+    is_completed = serializers.SerializerMethodField(read_only=True)
+    all_payments = PaymentSerializer(source="payments", many=True, read_only=True)
     image = Base64ImageField(
         required=False,
     )
@@ -53,7 +53,9 @@ class CollectSerializer(serializers.ModelSerializer):
         return obj.payments.aggregate(total=Sum("amount"))["total"] or 0
 
     def get_amount_donators(self, obj):
-        return obj.amount_donators
+        if hasattr(obj, "amount_donators"):
+            return obj.amount_donators or 0
+        return obj.payments.values("donator").distinct().count() or 0
 
     def get_is_completed(self, obj):
         return obj.target <= self.get_current_amount(obj)

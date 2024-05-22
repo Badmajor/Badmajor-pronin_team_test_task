@@ -1,4 +1,4 @@
-from django.db.models import Sum, Prefetch
+from django.db.models import Count, Sum, Prefetch
 from rest_framework import viewsets, status
 
 from payments.models import Collect, Payment
@@ -16,10 +16,13 @@ class CollectViewSet(viewsets.ModelViewSet):
         .prefetch_related(
             Prefetch(
                 "payments",
-                queryset=Payment.objects.select_related("donator")
+                queryset=Payment.objects.select_related("donator"),
             )
         )
-        .annotate(current_amount=Sum("payments__amount"))
+        .annotate(
+            current_amount=Sum("payments__amount"),
+            amount_donators=Count("payments__donator", distinct=True),
+        )
     )
     serializer_class = CollectSerializer
 
